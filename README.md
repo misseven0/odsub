@@ -1,2 +1,2 @@
-# onedrive-tools
+# od-tools
 tools for ms od2
