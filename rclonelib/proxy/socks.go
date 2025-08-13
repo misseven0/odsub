@@ -9,10 +9,10 @@ import (
 	"golang.org/x/net/proxy"
 )
 
-// SOCKS5 Dial  a net.Conn using a SOCKS5 proxy server.
+// SOCKS5 Dial net.Conn using a SOCKS5 proxy svr.
 // The socks5Proxy address can be in the form of [user:password@]host:port, [user@]host:port or just host:port if no auth is required.
 // It will optionally take a proxyDialer to dial the SOCKS5 proxy server. If nil is passed, it will use the default net.Dialer.
-func SOCKS5Dial(network, addr, socks5Proxy string, proxyDialer proxy.Dialer) (net.Conn, error) {
+func SOCKS5Dial0(network, addr, socks5Proxy string, proxyDialer proxy.Dialer) (net.Conn, error) {
 
 	if proxyDialer == nil {
 		proxyDialer = &net.Dialer{}
