@@ -16,7 +16,7 @@ func newWorker() *worker {
 	}
 }
 
-// start starts the worker in a separate goroutine.
+//  
 // The worker will run tasks from its taskQueue until the taskQueue is closed.
 // For the length of the taskQueue is 1, the worker will be pushed back to the pool after executing 1 task.
 func (w *worker) start(pool *goPool, workerIndex int) {
