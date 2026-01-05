@@ -16,7 +16,7 @@ import (
 	"github.com/rclone/rclone/fs"
 )
 
-// DirCache caches paths to directory IDs and vice versa
+// Dir caches paths to directory IDs and vice versa
 type DirCache struct {
 	cacheMu  sync.RWMutex // protects cache and invCache
 	cache    map[string]string
@@ -26,6 +26,7 @@ type DirCache struct {
 	fs           DirCacher  // Interface to find and make directories
 	trueRootID   string     // ID of the absolute root
 	root         string     // the path the cache is rooted on
+	Name         string     //
 	rootID       string     // ID of the root directory
 	rootParentID string     // ID of the root's parent directory
 	foundRoot    bool       // Whether we have found the root or not
