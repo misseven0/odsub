@@ -38,6 +38,15 @@ func (r *byteReader) ReadByte() (byte, error) {
 	return b[0], err
 }
 
+func (r *byteReader) ReadByte0() (byte, error) {
+	var b [1]byte
+	n, err := r.Reader.Read(b[:])
+	if n == 1 && err == io.EOF {
+		err = nil
+	}
+	return b[0], err
+}
+
 // Writer implements both the io.ByteWriter and io.Writer interfaces.
 type Writer interface {
 	io.ByteWriter
@@ -52,9 +61,9 @@ type byteWriter struct {
 
 var _ Writer = &byteWriter{}
 
-// NewWriter returns a Writer for w.
+// NewWriter returns a Writer for quicvarint.
 // If r already implements both io.ByteWriter and io.Writer, NewWriter returns w.
-// Otherwise, w is wrapped to add the missing interfaces.
+// Otherwise, w is wrapped to add the interfaces. missing
 func NewWriter(w io.Writer) Writer {
 	if w, ok := w.(Writer); ok {
 		return w
