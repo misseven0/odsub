@@ -18,6 +18,7 @@ import (
 
 var global Logger
 
+// Tracef
 func Tracef(format string, v ...interface{}) {
 	global.Out(LevelTrace, 2, fmt.Sprintf(format, v...))
 }
@@ -26,10 +27,12 @@ func Debugf(format string, v ...interface{}) {
 	global.Out(LevelDebug, 2, fmt.Sprintf(format, v...))
 }
 
+// Infof
 func Infof(format string, v ...interface{}) {
 	global.Out(LevelInfo, 2, fmt.Sprintf(format, v...))
 }
 
+// Warnf
 func Warnf(format string, v ...interface{}) {
 	global.Out(LevelWarn, 2, fmt.Sprintf(format, v...))
 }
