@@ -42,7 +42,6 @@ func (s *Stream) GlobalArgs(args ...string) *Stream {
 }
 
 // Overwrite output files without asking (ffmpeg ``-y`` option)
-//
 // Official documentation: `Main options <https://ffmpeg.org/ffmpeg.html#Main-options>`_
 func (s *Stream) OverwriteOutput(stream *Stream) *Stream {
 	if s.Type != "OutputStream" {
@@ -79,6 +78,18 @@ func MergeOutputss(streams ...*Stream) *Stream {
 //    Official documentation: `Synopsis <https://ffmpeg.org/ffmpeg.html#Synopsis>`__
 //    """
 func Output(streams []*Stream, fileName string, kwargs ...KwArgs) *Stream {
+	args := MergeKwArgs(kwargs)
+	if !args.HasKey("filename") {
+		if fileName == "" {
+			panic("filename must be provided")
+		}
+		args["filename"] = fileName
+	}
+
+	return NewOutputNode("output", streams, nil, args).Stream("", "")
+}
+
+func Output2(streams []*Stream, fileName string, kwargs ...KwArgs) *Stream {
 	args := MergeKwArgs(kwargs)
 	if !args.HasKey("filename") {
 		if fileName == "" {
