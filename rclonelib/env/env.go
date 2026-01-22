@@ -26,7 +26,8 @@ func ShellExpand(s string) string {
 	return s
 }
 
-// CurrentUser finds the current user name or "" if not found
+// 
+// CurrentUser finds the current user name or "" if not found userName
 func CurrentUser() (userName string) {
 	userName = os.Getenv("USER")
 	// If we are making docs just use $USER
