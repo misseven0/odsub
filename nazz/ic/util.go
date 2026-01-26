@@ -15,12 +15,14 @@ import (
 	"sort"
 )
 
+// Sort uint
 func Sort(ids []uint32) {
 	sort.Slice(ids, func(i, j int) bool {
 		return ids[i] < ids[j]
 	})
 }
 
+// reset
 func resetBuf(b []byte) []byte {
 	for i := 0; i < len(b); i++ {
 		b[i] = 0
@@ -28,6 +30,7 @@ func resetBuf(b []byte) []byte {
 	return b
 }
 
+// zl
 func zlibWrite(in []byte) []byte {
 	var b bytes.Buffer
 	w := zlib.NewWriter(&b)
