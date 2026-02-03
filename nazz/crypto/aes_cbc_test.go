@@ -123,3 +123,37 @@ func TestCase1(t *testing.T) {
 	assert.Equal(t, []byte(goldenOrig), debuf)
 	assert.Equal(t, nil, err)
 }
+
+func TestCase2(t *testing.T) {
+	goldenOrig := "1234567890"
+	goldenPaddingOrig := []byte{0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x30, 0x06, 0x06, 0x06, 0x06, 0x06, 0x06}
+	goldEn := "56d062398c390623e1b4c8a24c3bd48b"
+
+	key := commonKey192
+	iv := CommonIV
+
+	// -----encrypt-----
+	// PKCS7填充
+	paddingOrig := EncryptPKCS7([]byte(goldenOrig), aes.BlockSize)
+	assert.Equal(t, goldenPaddingOrig, paddingOrig)
+	// AES加密
+	enbuf, err := EncryptAESWithCBC(paddingOrig, key, iv)
+	assert.Equal(t, nil, err)
+	// 转hex进制
+	en := hex.EncodeToString(enbuf)
+	assert.Equal(t, goldEn, en)
+
+	// -----decrypt-----
+	// 读hex进制
+	enbuf2, err := hex.DecodeString(en)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, enbuf, enbuf2)
+	// AES解密
+	paddingDebuf, err := DecryptAESWithCBC(enbuf2, key, iv)
+	assert.Equal(t, nil, err)
+	assert.Equal(t, goldenPaddingOrig, paddingDebuf)
+	// 去除PKCS7填充
+	debuf, err := DecryptPKCS7(paddingDebuf)
+	assert.Equal(t, []byte(goldenOrig), debuf)
+	assert.Equal(t, nil, err)
+}
