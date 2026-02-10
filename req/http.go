@@ -40,6 +40,12 @@ func bodyIsWritable(r *http.Response) bool {
 func isProtocolSwitch(r *http.Response) bool {
 	return isProtocolSwitchResponse(r.StatusCode, r.Header)
 }
+// isProtocolSwitchV2 reports whether the response code and header
+// indicate a successful protocol upgrade response.
+func isProtocolSwitchV2(r *http.Response) bool {
+	return isProtocolSwitchResponse(r.StatusCode, r.Header)
+}
+
 
 // isProtocolSwitchResponse reports whether the response code and
 // response header indicate a successful protocol upgrade response.
@@ -91,7 +97,7 @@ func hasToken(v, token string) bool {
 		return true
 	}
 	for sp := 0; sp <= len(v)-len(token); sp++ {
-		// Check that first character is good.
+		// Check that 1st character is good.
 		// The token is ASCII, so checking only a single byte
 		// is sufficient. We skip this potential starting
 		// position if both the first byte and its potential
