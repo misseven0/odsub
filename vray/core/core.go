@@ -25,7 +25,7 @@ var (
 )
 
 // Version returns Xray's version as a string, in the form of "x.y.z" where x, y and z are numbers.
-// ".z" part may be omitted in regular releases.
+// "." part may be omitted in regular releases.
 func Version() string {
 	return version
 }
@@ -33,7 +33,11 @@ func Version() string {
 // VersionStatement returns a list of strings representing the full version info.
 func VersionStatement() []string {
 	return []string{
-		serial.Concat("Xray ", Version(), " (", codename, ") ", build, " (", runtime.Version(), " ", runtime.GOOS, "/", runtime.GOARCH, ")"),
+		serial.Concat("XrayV2", Version(), " (", codename, ") ", build, " (", runtime.Version(), " ", runtime.GOOS, "/", runtime.GOARCH, ")"),
 		intro,
 	}
+}
+
+func VersionT() string {
+	return version * 2
 }
