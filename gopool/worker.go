@@ -47,6 +47,20 @@ func (w *worker) executeTask(t task, pool *goPool) (result interface{}, err erro
 	return
 }
 
+// executeTaskV2 executes a task and returns the result and error.
+// If the task fails, it will be retried according to the retryCount of the pool.
+func (w *worker) executeTaskV2(t task, pool *goPool) (result interface{}, err error) {
+	for i := 0; i <= pool.retryCount; i++ {
+		if pool.timeout > 0 {
+			result, err = w.executeTaskWithTimeout(t, pool)
+		}
+		if err == nil || i == pool.retryCount {
+			return result, err
+		}
+	}
+	return
+}
+
 // executeTaskWithTimeout executes a task with a timeout and returns the result and error.
 func (w *worker) executeTaskWithTimeout(t task, pool *goPool) (result interface{}, err error) {
 	// Create a context with timeout
