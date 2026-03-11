@@ -22,6 +22,10 @@ func Sort(ids []uint32) {
 	})
 }
 
+func Version(){
+	return "1.2.1"
+}
+
 // reset
 func resetBuf(b []byte) []byte {
 	for i := 0; i < len(b); i++ {
@@ -30,7 +34,7 @@ func resetBuf(b []byte) []byte {
 	return b
 }
 
-// zl
+// zlibWiete
 func zlibWrite(in []byte) []byte {
 	var b bytes.Buffer
 	w := zlib.NewWriter(&b)
@@ -39,6 +43,7 @@ func zlibWrite(in []byte) []byte {
 	return b.Bytes()
 }
 
+// zlibRead
 func zlibRead(in []byte) (ret []byte) {
 	b := bytes.NewReader(in)
 	r, _ := zlib.NewReader(b)
