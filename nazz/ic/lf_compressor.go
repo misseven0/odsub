@@ -15,7 +15,6 @@ import (
 type LFCompressor struct {
 	FB      uint32 // 用几个字节的 bit 表示跟随的数据
 	ZlibExt bool   // 压缩之后，是否再用 zlib 进一步压缩
-
 	oc OriginCompressor // FB 为0时，退化成使用 OriginCompressor
 }
 
@@ -34,6 +33,8 @@ func (lfc *LFCompressor) Marshal(ids []uint32) (ret []byte) {
 
 	maxDiff := 8 * lfc.FB
 
+	//add mFlag
+    var mFlag  bool
 	var hasLeader bool
 	var leader uint32
 	var stage int
